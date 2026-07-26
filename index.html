@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>黄河人文古迹之旅 开封→兰州</title>
+<title>黄河人文古迹之旅 义乌→兰州</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
@@ -58,10 +58,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 <div id="sidebar">
   <div class="hdr">
     <h1>黄河人文古迹之旅</h1>
-    <p>开封→郑州→洛阳→西安→兰州 · 4天约1,450km</p>
+    <p>义乌→开封→洛阳→西安→兰州 · 5天约1,950km</p>
     <div class="sts">
-      <div class="st"><div class="n">~1,450</div><div class="l">总里程km</div></div>
-      <div class="st"><div class="n">4</div><div class="l">总天数</div></div>
+      <div class="st"><div class="n">~1,950</div><div class="l">总里程km</div></div>
+      <div class="st"><div class="n">5</div><div class="l">总天数</div></div>
       <div class="st"><div class="n">6古都</div><div class="l">千年人文</div></div>
     </div>
   </div>
@@ -69,11 +69,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
   <div id="days"></div>
   <div class="lg">
     <h3>图例</h3>
-    <div class="li"><div class="ll" style="background:#3b82f6"></div>Day 1 开封→郑州→洛阳</div>
-    <div class="li"><div class="ll" style="background:#10b981"></div>Day 2 洛阳深度游</div>
-    <div class="li"><div class="ll" style="background:#f59e0b"></div>Day 3 洛阳→三门峡→西安</div>
-    <div class="li"><div class="ll" style="background:#ef4444"></div>Day 4 西安→天水→兰州</div>
-    <div class="li"><div class="ll" style="background:#8b5cf6;opacity:.5"></div>黄河走向(参考)</div>
+    <div class="li"><div class="ll" style="background:#6366f1"></div>Day 1 义乌→开封(赶路)</div>
+    <div class="li"><div class="ll" style="background:#3b82f6"></div>Day 2 开封→郑州→洛阳</div>
+    <div class="li"><div class="ll" style="background:#10b981"></div>Day 3 洛阳→三门峡</div>
+    <div class="li"><div class="ll" style="background:#f59e0b"></div>Day 4 三门峡→西安</div>
+    <div class="li"><div class="ll" style="background:#ef4444"></div>Day 5 西安→天水→兰州</div>
+    <div class="li"><div class="ll" style="background:#8b5cf6;opacity:.4"></div>黄河走向(参考)</div>
     <div class="li"><div class="ld" style="background:#a855f7"></div> 世界遗产/古迹</div>
     <div class="li"><div class="ld" style="background:#eab308"></div> 美食</div>
     <div class="li"><div class="ld" style="background:#06b6d4"></div> 黄河景观</div>
@@ -91,73 +92,70 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
   </div>
 </div>
 <script>
-const map=L.map('map',{zoomControl:false}).setView([34.5,110],7);
+const map=L.map('map',{zoomControl:false}).setView([33,113],6);
 L.control.zoom({position:'topright'}).addTo(map);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OSM & CartoDB',maxZoom:19,subdomains:'abcd'}).addTo(map);
 
 function mi(e,s){return L.divIcon({html:`<span style="font-size:${s||14}px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))">${e}</span>`,className:'mi',iconSize:[(s||14)+6,(s||14)+6],iconAnchor:[(s||14)/2+3,(s||14)/2+3]})}
-const iC=mi('🏙',14),iMu=mi('🏛',14),iTp=mi('🛕',13),iFd=mi('🍜',13),iHm=mi('🏠',15),iRi=mi('🌊',13),iSc=mi('🏔',13),iSt=mi('⭐',14);
+const iC=mi('🏙',14),iMu=mi('🏛',14),iTp=mi('🛕',13),iFd=mi('🍜',13),iHm=mi('🏠',15),iRi=mi('',13),iSc=mi('',13),iSt=mi('⭐',14);
 
-const C_D1='#3b82f6',C_D2='#10b981',C_D3='#f59e0b',C_D4='#ef4444',C_YELLOW='#8b5cf6';
+const C_D1='#6366f1',C_D2='#3b82f6',C_D3='#10b981',C_D4='#f59e0b',C_D5='#ef4444',C_YELLOW='#8b5cf6';
 
-// 黄河走向参考线（简化）
 const yellowRiver=[[34.8,114.3],[34.7,113.8],[34.8,113.2],[34.9,112.8],[35.0,112.3],[35.1,111.8],[35.2,111.3],[35.1,110.8],[35.0,110.3],[34.9,109.8],[34.8,109.3],[34.7,108.8],[34.6,108.3],[34.5,107.8],[34.5,107.0],[34.5,106.0],[34.6,105.5],[34.8,105.0],[35.0,104.5],[35.5,104.2],[36.0,103.8]];
 L.polyline(yellowRiver,{color:C_YELLOW,weight:2,opacity:.3,dashArray:'8,6'}).addTo(map).bindTooltip('黄河',{sticky:true,className:'rt'});
 
 const days=[
-  // ===== Day 1: 开封→郑州→洛阳 =====
-  {ph:'Day 1',pc:C_D1,d:'Day 1',t:'开封 → 郑州 → 洛阳',r:'350km · 约4h',dist:'350km',hl:'清明上河园 · 河南博物院 · 开封灌汤包',
+  {ph:'Day 1',pc:C_D1,d:'Day 1',t:'义乌 → 南昌 → 开封',r:'700km · 约8h',dist:'700km',hl:'赶路日 · 滕王阁(可选) · 开封鼓楼夜市',
+   co:[[29.310,120.150],[29.0,118.5],[28.7,117.0],[28.682,115.858],[29.5,115.0],[30.5,114.5],[31.5,114.0],[32.5,114.2],[33.5,114.2],[34.5,114.3],[34.797,114.307]],
+   mk:[{p:[29.310,120.150],i:iHm,n:'义乌',d:'出发地'},{p:[28.682,115.858],i:iMu,n:'南昌',d:'滕王阁(可选)'},{p:[34.797,114.307],i:iC,n:'开封',d:'八朝古都 · 鼓楼夜市'}],
+   stops:[{name:'义乌出发',cat:'起点',coord:[29.310,120.150],hours:'7:00出发',desc:'加满油/充满电，G60沪昆高速一路向西，今天赶路为主'},
+          {name:'南昌(可选停留)',cat:'城市',coord:[28.682,115.858],hours:'10:30到达',desc:'精力充沛可下高速逛滕王阁(1h)，否则直接路过。南昌拌粉+瓦罐汤可作午餐'},
+          {name:'开封鼓楼夜市',cat:'美食街',coord:[34.795,114.310],hours:'18:00-24:00',desc:'开封最有名的夜市！灌汤包、炒凉粉、羊肉炕馍、杏仁茶',guide:'小红书搜"开封鼓楼夜市攻略"'}],
+   hotels:[{name:'开封老城区酒店',detail:'¥150-300/晚，近鼓楼夜市'}],
+   foods:[{name:'鼓楼夜市',detail:'灌汤包、炒凉粉、羊肉炕馍、杏仁茶'},{name:'黄家包子',detail:'开封灌汤包老字号'}]},
+
+  {ph:'Day 2',pc:C_D2,d:'Day 2',t:'开封 → 郑州 → 洛阳',r:'200km · 约2.5h',dist:'200km',hl:'清明上河园 · 河南博物院 · 洛阳水席',
    co:[[34.797,114.307],[34.75,114.0],[34.7,113.7],[34.757,113.650],[34.7,113.2],[34.65,112.8],[34.680,112.460]],
-   mk:[{p:[34.797,114.307],i:iC,n:'开封',d:'八朝古都 · 清明上河园'},{p:[34.757,113.650],i:iMu,n:'郑州',d:'河南博物院'},{p:[34.680,112.460],i:iC,n:'洛阳',d:'十三朝古都'}],
-   stops:[{name:'清明上河园',cat:'景区',coord:[34.800,114.310],hours:'8:30-22:00',desc:'按北宋张择端《清明上河图》复原的大型宋代文化主题公园。门票120元，建议上午逛，有包公迎宾、王员外招婿等实景演出',guide:'小红书搜"清明上河园攻略"'},
-          {name:'开封灌汤包',cat:'美食',coord:[34.795,114.320],hours:'11:00-14:00',desc:'第一楼或黄家包子，皮薄馅大汤汁鲜，开封招牌美食'},
-          {name:'河南博物院',cat:'博物馆',coord:[34.757,113.650],hours:'9:00-17:00 周一闭馆',desc:'中国顶级博物院！贾湖骨笛(9000年)、妇好鸮尊、莲鹤方壶。免费需预约，预留2-3小时',guide:'小红书搜"河南博物院攻略"'},
-          {name:'郑州烩面',cat:'美食',coord:[34.760,113.660],hours:'-',desc:'合记或萧记烩面，河南特色，汤浓面筋道'},
-          {name:'洛阳入住',cat:'城市',coord:[34.680,112.460],hours:'-',desc:'十三朝古都，明天深度游龙门石窟'}],
+   mk:[{p:[34.797,114.307],i:iMu,n:'开封',d:'清明上河园'},{p:[34.757,113.650],i:iMu,n:'郑州',d:'河南博物院'},{p:[34.680,112.460],i:iC,n:'洛阳',d:'十三朝古都'}],
+   stops:[{name:'清明上河园',cat:'景区',coord:[34.800,114.310],hours:'8:30-22:00',desc:'按北宋《清明上河图》复原的宋代文化主题公园。门票120元，有包公迎宾等实景演出',guide:'小红书搜"清明上河园攻略"'},
+          {name:'开封灌汤包',cat:'美食',coord:[34.795,114.320],hours:'11:00-14:00',desc:'第一楼或黄家包子，皮薄馅大汤汁鲜'},
+          {name:'河南博物院',cat:'博物馆',coord:[34.757,113.650],hours:'9:00-17:00 周一闭馆',desc:'中国顶级博物院！贾湖骨笛(9000年)、妇好鸮尊、莲鹤方壶。免费需预约，预留2-3h',guide:'小红书搜"河南博物院攻略"'},
+          {name:'洛阳水席',cat:'美食',coord:[34.680,112.460],hours:'18:00-21:00',desc:'真不同饭店，连汤肉片、牡丹燕菜、焦炸丸子，唐代宫廷宴体验'}],
    hotels:[{name:'洛阳老城区/龙门附近酒店',detail:'¥200-400/晚'}],
-   foods:[{name:'开封第一楼灌汤包',detail:'开封招牌，皮薄汁鲜'},{name:'郑州合记烩面',detail:'河南特色羊肉烩面'},{name:'洛阳水席',detail:'连汤肉片、牡丹燕菜，洛阳传统宴席'}]},
+   foods:[{name:'开封第一楼灌汤包',detail:'开封招牌'},{name:'郑州合记烩面',detail:'河南特色羊肉烩面'},{name:'洛阳水席',detail:'连汤肉片、牡丹燕菜'}]},
 
-  // ===== Day 2: 洛阳深度游 =====
-  {ph:'Day 2',pc:C_D2,d:'Day 2',t:'洛阳深度游',r:'市内50km',dist:'50km',hl:'龙门石窟 · 丽景门 · 洛邑古城',
-   co:[[34.680,112.460],[34.600,112.470],[34.650,112.460],[34.660,112.450],[34.680,112.460]],
-   mk:[{p:[34.600,112.470],i:iMu,n:'龙门石窟',d:'世界遗产 · 中国石刻艺术巅峰'}],
-   stops:[{name:'龙门石窟',cat:'世界遗产',coord:[34.600,112.470],hours:'8:00-18:00',desc:'中国四大石窟之一！卢舍那大佛(据说按武则天面容雕刻)、宾阳三洞、古阳洞。门票90元，预留3-4小时。建议请导游或租讲解器',guide:'小红书搜"龙门石窟攻略2026"'},
-          {name:'洛阳水席午餐',cat:'美食',coord:[34.650,112.460],hours:'12:00-14:00',desc:'真不同饭店或管记水席，连汤肉片、牡丹燕菜、焦炸丸子，体验唐代宫廷宴'},
-          {name:'丽景门',cat:'古迹',coord:[34.660,112.450],hours:'8:00-22:00',desc:'"不到丽景门，枉来洛阳城"，洛阳古城标志性城门，门票30元'},
-          {name:'洛邑古城',cat:'景区',coord:[34.655,112.455],hours:'全天',desc:'复原的隋唐洛阳城，晚上灯光秀很美，可以穿汉服拍照',guide:'小红书搜"洛邑古城汉服攻略"'},
-          {name:'洛阳老街夜市',cat:'美食街',coord:[34.660,112.445],hours:'18:00-24:00',desc:'不翻汤、浆面条、牡丹饼、新安烫面角'}],
-   hotels:[{name:'洛阳老城区酒店',detail:'¥200-400/晚，逛夜市方便'}],
-   foods:[{name:'真不同水席',detail:'洛阳水席老字号，牡丹燕菜'},{name:'老城不翻汤',detail:'洛阳特色小吃，绿豆面饼+高汤'},{name:'浆面条',detail:'洛阳传统面食，酸香开胃'}]},
+  {ph:'Day 3',pc:C_D3,d:'Day 3',t:'洛阳(龙门石窟) → 三门峡',r:'200km · 约2.5h',dist:'200km',hl:'龙门石窟 · 丽景门 · 黄河大坝',
+   co:[[34.680,112.460],[34.600,112.470],[34.650,112.460],[34.7,112.0],[34.8,111.5],[34.950,111.200]],
+   mk:[{p:[34.600,112.470],i:iMu,n:'龙门石窟',d:'世界遗产 · 卢舍那大佛'},{p:[34.950,111.200],i:iRi,n:'三门峡',d:'黄河大坝 · 中流砥柱'}],
+   stops:[{name:'龙门石窟',cat:'世界遗产',coord:[34.600,112.470],hours:'8:00-18:00',desc:'中国四大石窟之一！卢舍那大佛(据传按武则天面容雕刻)、宾阳三洞。门票90元，预留3-4h',guide:'小红书搜"龙门石窟攻略2026"'},
+          {name:'丽景门',cat:'古迹',coord:[34.660,112.450],hours:'8:00-22:00',desc:'"不到丽景门，枉来洛阳城"，门票30元'},
+          {name:'三门峡黄河大坝',cat:'黄河景观',coord:[34.950,111.200],hours:'8:00-17:00',desc:'黄河上第一座大型水利枢纽！"中流砥柱"典故出处。门票40元',guide:'小红书搜"三门峡黄河大坝"'}],
+   hotels:[{name:'三门峡市区酒店',detail:'¥150-300/晚'}],
+   foods:[{name:'三门峡黄河鲤鱼',detail:'黄河特色，肉质鲜嫩'},{name:'洛阳不翻汤',detail:'绿豆面饼+高汤，洛阳特色'}]},
 
-  // ===== Day 3: 洛阳→三门峡→西安 =====
-  {ph:'Day 3',pc:C_D3,d:'Day 3',t:'洛阳 → 三门峡 → 西安',r:'370km · 约4.5h',dist:'370km',hl:'三门峡黄河大坝 · 函谷关 · 沿黄公路',
-   co:[[34.680,112.460],[34.7,112.0],[34.8,111.5],[34.9,111.0],[34.950,111.200],[35.0,110.8],[34.9,110.3],[34.8,109.8],[34.5,109.3],[34.3,109.0],[34.262,108.940]],
-   mk:[{p:[34.950,111.200],i:iRi,n:'三门峡',d:'黄河大坝 · 中流砥柱'},{p:[34.262,108.940],i:iSt,n:'西安',d:'十三朝古都 · 兵马俑'}],
-   stops:[{name:'洛阳出发',cat:'起点',coord:[34.680,112.460],hours:'8:00出发',desc:'沿G30连霍高速向西，沿黄河南岸行驶'},
-          {name:'三门峡黄河大坝',cat:'黄河景观',coord:[34.950,111.200],hours:'8:00-17:00',desc:'黄河上第一座大型水利枢纽！可以近距离看黄河奔腾，"中流砥柱"典故出处。门票40元',guide:'小红书搜"三门峡黄河大坝"'},
-          {name:'函谷关',cat:'古迹',coord:[34.900,111.050],hours:'8:00-17:30',desc:'"一夫当关万夫莫开"，老子写《道德经》之地。门票40元，历史感极强',guide:'小红书搜"函谷关攻略"'},
-          {name:'沿黄公路风景',cat:'风景',coord:[34.8,110.3],hours:'沿途',desc:'G30沿黄河南岸行驶，潼关附近可以看到黄河拐弯，壮观'},
-          {name:'西安古城墙',cat:'世界遗产',coord:[34.260,108.940],hours:'8:00-22:00',desc:'中国现存最完整古城墙，门票54元，租自行车骑行一圈13.7km约1.5h',guide:'小红书搜"西安城墙骑行攻略"'},
-          {name:'回民街',cat:'美食街',coord:[34.265,108.945],hours:'全天',desc:'肉夹馍、羊肉泡馍、biangbiang面、凉皮、甑糕、胡辣汤',guide:'小红书搜"回民街必吃攻略"'}],
+  {ph:'Day 4',pc:C_D4,d:'Day 4',t:'三门峡 → 函谷关 → 西安',r:'220km · 约3h',dist:'220km',hl:'函谷关 · 沿黄公路 · 古城墙 · 回民街',
+   co:[[34.950,111.200],[34.9,111.0],[34.900,111.050],[35.0,110.8],[34.9,110.3],[34.8,109.8],[34.5,109.3],[34.3,109.0],[34.262,108.940]],
+   mk:[{p:[34.900,111.050],i:iMu,n:'函谷关',d:'老子写道德经之地'},{p:[34.262,108.940],i:iSt,n:'西安',d:'十三朝古都 · 回民街'}],
+   stops:[{name:'函谷关',cat:'古迹',coord:[34.900,111.050],hours:'8:00-17:30',desc:'"一夫当关万夫莫开"，老子写《道德经》之地。门票40元',guide:'小红书搜"函谷关攻略"'},
+          {name:'沿黄公路风景',cat:'风景',coord:[34.8,110.3],hours:'沿途',desc:'G30沿黄河南岸，潼关附近看黄河拐弯，壮观'},
+          {name:'西安古城墙',cat:'世界遗产',coord:[34.260,108.940],hours:'8:00-22:00',desc:'中国现存最完整古城墙，门票54元，租自行车骑行一圈13.7km',guide:'小红书搜"西安城墙骑行攻略"'},
+          {name:'回民街',cat:'美食街',coord:[34.265,108.945],hours:'全天',desc:'肉夹馍、羊肉泡馍、biangbiang面、凉皮、甑糕',guide:'小红书搜"回民街必吃攻略"'}],
    hotels:[{name:'西安钟楼/大雁塔附近酒店',detail:'¥250-500/晚'}],
-   foods:[{name:'回民街',detail:'肉夹馍(子午路张记)、羊肉泡馍(老孙家)、biangbiang面'},{name:'永兴坊',detail:'摔碗酒、子长煎饼、陕北美食'},{name:'长安大排档',detail:'葫芦鸡、毛笔酥，网红陕菜'}]},
+   foods:[{name:'回民街',detail:'肉夹馍(子午路张记)、羊肉泡馍(老孙家)'},{name:'永兴坊',detail:'摔碗酒、子长煎饼'},{name:'长安大排档',detail:'葫芦鸡、毛笔酥'}]},
 
-  // ===== Day 4: 西安→天水→兰州 =====
-  {ph:'Day 4',pc:C_D4,d:'Day 4',t:'西安 → 宝鸡 → 天水 → 兰州',r:'680km · 约7.5h',dist:'680km',hl:'法门寺 · 麦积山石窟 · 天水麻辣烫 · 黄河铁桥',
+  {ph:'Day 5',pc:C_D5,d:'Day 5',t:'西安 → 宝鸡 → 天水 → 兰州',r:'680km · 约7.5h',dist:'680km',hl:'法门寺 · 麦积山石窟 · 天水麻辣烫 · 黄河铁桥',
    co:[[34.262,108.940],[34.3,108.5],[34.4,108.0],[34.5,107.5],[34.580,107.240],[34.5,107.0],[34.5,106.5],[34.5,106.0],[34.580,105.720],[34.6,105.5],[34.8,105.0],[35.0,104.5],[35.5,104.2],[36.058,103.823]],
-   mk:[{p:[34.580,107.240],i:iTp,n:'法门寺',d:'佛指舍利 · 唐代地宫'},{p:[34.580,105.720],i:iMu,n:'天水',d:'麦积山石窟'},{p:[36.058,103.823],i:iHm,n:'兰州',d:'黄河铁桥 · 牛肉面'}],
-   stops:[{name:'兵马俑(可选)',cat:'世界遗产',coord:[34.380,109.280],hours:'8:30-18:00',desc:'世界第八大奇迹！门票120元，1.5-2h。如果时间紧可跳过直奔兰州',guide:'小红书搜"兵马俑攻略2026"'},
-          {name:'法门寺',cat:'古迹',coord:[34.580,107.240],hours:'8:30-18:00',desc:'供奉释迦牟尼佛指舍利！唐代地宫出土大量国宝。门票100元(含景区车)，预留2h',guide:'小红书搜"法门寺攻略"'},
-          {name:'G30穿越关中→陇西',cat:'风景',coord:[34.5,106.0],hours:'沿途',desc:'从关中平原进入陇西高原，地貌从平原渐变黄土高原，渭河沿岸风光'},
-          {name:'麦积山石窟',cat:'世界遗产',coord:[34.580,105.720],hours:'8:30-17:30',desc:'中国四大石窟之一！悬崖峭壁上的佛像栈道，门票80元。比莫高窟人少太多，非常值得！预留2h',guide:'小红书搜"麦积山石窟攻略"'},
-          {name:'天水麻辣烫',cat:'美食',coord:[34.580,105.730],hours:'-',desc:'2024年爆火！甘谷辣椒+手擀粉+土豆丸子，下高速吃一碗再走'},
+   mk:[{p:[34.580,107.240],i:iTp,n:'法门寺',d:'佛指舍利'},{p:[34.580,105.720],i:iMu,n:'天水',d:'麦积山石窟'},{p:[36.058,103.823],i:iHm,n:'兰州',d:'黄河铁桥'}],
+   stops:[{name:'法门寺(可选)',cat:'古迹',coord:[34.580,107.240],hours:'8:30-18:00',desc:'供奉释迦牟尼佛指舍利！唐代地宫国宝。门票100元(含景区车)，预留2h。时间紧可跳过',guide:'小红书搜"法门寺攻略"'},
+          {name:'G30穿越关中→陇西',cat:'风景',coord:[34.5,106.0],hours:'沿途',desc:'关中平原→黄土高原，地貌渐变，渭河沿岸风光'},
+          {name:'麦积山石窟',cat:'世界遗产',coord:[34.580,105.720],hours:'8:30-17:30',desc:'中国四大石窟之一！悬崖峭壁上的佛像栈道，门票80元。比莫高窟人少太多！预留2h',guide:'小红书搜"麦积山石窟攻略"'},
+          {name:'天水麻辣烫',cat:'美食',coord:[34.580,105.730],hours:'-',desc:'2024年爆火！甘谷辣椒+手擀粉+土豆丸子'},
           {name:'黄河铁桥(中山桥)',cat:'景点',coord:[36.065,103.817],hours:'全天',desc:'黄河第一桥，百年铁桥，兰州地标。行程圆满结束！'},
-          {name:'正宁路夜市',cat:'美食街',coord:[36.055,103.820],hours:'18:00-24:00',desc:'牛奶鸡蛋糟、烤羊肉串、酿皮，兰州夜生活'}],
+          {name:'正宁路夜市',cat:'美食街',coord:[36.055,103.820],hours:'18:00-24:00',desc:'牛奶鸡蛋醪糟、烤羊肉串、酿皮'}],
    hotels:[{name:'兰州万达文华酒店',detail:'¥400-600/晚'},{name:'⛺ 黄河边床车露营',detail:'免费'}],
-   foods:[{name:'磨沟沿牛肉面',detail:'兰州牛肉面天花板，早6点排队'},{name:'正宁路夜市',detail:'牛奶鸡蛋醪糟(马三洋芋片旁)、烤羊肉串'},{name:'张掖路大众巷',detail:'马子禄牛肉面、酿皮'}]},
+   foods:[{name:'磨沟沿牛肉面',detail:'兰州牛肉面天花板，早6点排队'},{name:'正宁路夜市',detail:'牛奶鸡蛋醪糟、烤羊肉串'},{name:'张掖路大众巷',detail:'马子禄牛肉面'}]},
 ];
 
-// 绘制路线
 const confLines=[];
 let curPhaseColor=C_D1;
 days.forEach((d,i)=>{
@@ -169,13 +167,11 @@ days.forEach((d,i)=>{
   confLines.push(l);
 });
 
-// 城市标记
 days.forEach(d=>{(d.mk||[]).forEach(m=>{
   const mk=L.marker(m.p,{icon:m.i}).addTo(map);mk.bindPopup(`<div class="pp"><strong>${m.n}</strong><br>${m.d}</div>`);
   L.marker(m.p,{icon:L.divIcon({html:`<span class="cl">${m.n}</span>`,className:'',iconSize:[60,14],iconAnchor:[-6,7]}),interactive:false}).addTo(map);
 })});
 
-// 构建侧边栏
 const daysEl=document.getElementById('days');let curPh='';
 days.forEach((d,i)=>{
   if(d.ph&&d.ph!==curPh){curPh=d.ph;const sec=document.createElement('div');sec.className='sec';sec.innerHTML=`<h2><span class="d" style="background:${d.pc}"></span>${curPh}</h2>`;daysEl.appendChild(sec)}
@@ -185,7 +181,6 @@ days.forEach((d,i)=>{
   el.innerHTML=h;el.onclick=()=>selectDay(i);daysEl.lastChild.appendChild(el);
 });
 
-// 选择某天
 let selIdx=-1,currentStop=0;const hlLines=[],hlMks=[];
 function selectDay(idx){
   hlLines.forEach(l=>map.removeLayer(l));hlLines.length=0;hlMks.forEach(m=>map.removeLayer(m));hlMks.length=0;
@@ -207,7 +202,7 @@ function selectDay(idx){
   const stopsEl=document.getElementById('dpStops');stopsEl.innerHTML='';
   if(d.stops){d.stops.forEach((s,i)=>{
     const card=document.createElement('div');card.className='dp-stop'+(i===currentStop?' active':'');
-    card.innerHTML=`<div class="sn">第${i+1}站</div><div class="sname">${s.name}</div><div class="scat">${s.cat}</div><div class="shours">🕐 ${s.hours}</div><div class="sdesc">${s.desc}</div>${s.guide?`<div class="sguide" onclick="window.open('https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(s.name+'攻略')}','_blank')">📱 小红书攻略</div>`:''}`;
+    card.innerHTML=`<div class="sn">第${i+1}站</div><div class="sname">${s.name}</div><div class="scat">${s.cat}</div><div class="shours">🕐 ${s.hours}</div><div class="sdesc">${s.desc}</div>${s.guide?`<div class="sguide" onclick="window.open('https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(s.name+'攻略')}','_blank')"> 小红书攻略</div>`:''}`;
     card.onclick=()=>{currentStop=i;updateStopHighlight();map.flyTo(s.coord,13,{duration:.8})};
     stopsEl.appendChild(card);
   })}
@@ -222,7 +217,7 @@ function selectDay(idx){
 function updateStopHighlight(){document.querySelectorAll('.dp-stop').forEach((c,i)=>{c.classList.toggle('active',i===currentStop)})}
 function prevStop(){if(currentStop>0){currentStop--;updateStopHighlight();map.flyTo(days[selIdx].stops[currentStop].coord,13,{duration:.8})}}
 function nextStop(){if(days[selIdx].stops&&currentStop<days[selIdx].stops.length-1){currentStop++;updateStopHighlight();map.flyTo(days[selIdx].stops[currentStop].coord,13,{duration:.8})}}
-function resetView(){selIdx=-1;hlLines.forEach(l=>map.removeLayer(l));hlLines.length=0;hlMks.forEach(m=>map.removeLayer(m));hlMks.length=0;confLines.forEach(l=>l.setStyle({opacity:.75,weight:3}));document.querySelectorAll('.di.act').forEach(e=>e.classList.remove('act'));map.flyTo([34.5,110],7,{duration:1});document.getElementById('detailPanel').classList.remove('show');document.getElementById('resetBtn').style.display='none';document.getElementById('ovTxt').textContent='全程总览 · 点击日期查看详情'}
+function resetView(){selIdx=-1;hlLines.forEach(l=>map.removeLayer(l));hlLines.length=0;hlMks.forEach(m=>map.removeLayer(m));hlMks.length=0;confLines.forEach(l=>l.setStyle({opacity:.75,weight:3}));document.querySelectorAll('.di.act').forEach(e=>e.classList.remove('act'));map.flyTo([33,113],6,{duration:1});document.getElementById('detailPanel').classList.remove('show');document.getElementById('resetBtn').style.display='none';document.getElementById('ovTxt').textContent='全程总览 · 点击日期查看详情'}
 map.fitBounds(days.flatMap(d=>d.co),{padding:[25,25]});
 const sty=document.createElement('style');sty.textContent='.rt{background:rgba(10,10,26,.92)!important;border:1px solid #333!important;color:#fff!important;font-size:10px!important;border-radius:4px!important;padding:2px 7px!important}';document.head.appendChild(sty);
 </script>
